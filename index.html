@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title></title>
+		<link href="css/style.css" rel="stylesheet" />
+	</head>
+
+	<body>
+
+		<div id="clock" class="light">
+			<div class="display">
+				<div class="weekdays">
+					<span>SUN</span>
+					<span>MON</span>
+					<span>TUE</span>
+					<span>WED</span>
+					<span>THU</span>
+					<span>FRI</span>
+					<span>SAT</span>
+				</div>
+				<div class="ampm">
+					AM
+				</div>
+				<div class="alarm">
+				</div>
+				<div class="digits">
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+					<div class="dots"></div>
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+					<div class="dots"></div>
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+					<div class="zero num">
+						<span class="d1"></span>
+						<span class="d2"></span>
+						<span class="d3"></span>
+						<span class="d4"></span>
+						<span class="d5"></span>
+						<span class="d6"></span>
+						<span class="d7"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="button-holder">
+			<a class="button">Switch Theme</a>
+		</div>
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+	</body>
+	<script>
+		$(function() {
+			$clock = $("#clock");
+			//切换主题
+			$('.button-holder .button').click(function() {
+				$clock.toggleClass('light dark');
+			});
+			var $num = $clock.find('.num');
+			var timestr;
+			var classList = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+			var numList = [];
+			var ampm;
+
+			function clock() {
+				//  13:51:36
+				timestr = new Date().toLocaleTimeString();
+				numList[0] = parseInt(timestr.substr(0, 1));
+				numList[1] = parseInt(timestr.substr(1, 1));
+				numList[2] = parseInt(timestr.substr(3, 1));
+				numList[3] = parseInt(timestr.substr(4, 1));
+				numList[4] = parseInt(timestr.substr(6, 1));
+				numList[5] = parseInt(timestr.substr(7, 1));
+				//				console.log(onenum);
+				//				console.log(twonum)
+				//				console.log(threenum)
+				//				console.log(fournum)
+				//				console.log(fivenum)
+				//				console.log(sixnum)
+				$num.each(function(i, ev) {
+					$num.eq(i)[0].className = classList[numList[i]] + ' num';
+				})
+				//星期 
+				$(".weekdays").find('span').eq(new Date().getDay()).addClass('active').siblings('span').removeClass('active');
+
+				//判断 am/pm
+				ampm = parseInt(timestr.substr(0, 2));
+				if(ampm < 12) {
+					$(".ampm").text("AM");
+				} else {
+					$(".ampm").text("PM");
+				}
+				//console.log(time)
+			}
+
+			setInterval(clock, 1000);
+			clock();
+		})
+	</script>
+
+</html>
